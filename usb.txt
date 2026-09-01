@@ -1,0 +1,47 @@
+# 电脑 → 手机
+adb push "C:\Users\YOUR_USERNAME\Desktop\文件名" /sdcard/Download/
+
+# 手机 → 电脑
+adb pull /sdcard/Download/文件名 "C:\Users\YOUR_USERNAME\Desktop\"
+
+# 拉取所有照片
+adb pull /sdcard/DCIM/Camera/ "C:\Users\YOUR_USERNAME\Desktop\photos\"
+
+# 列出手机文件
+adb shell ls /sdcard/Download/
+
+
+
+
+
+
+# 不行
+## 解除（允许 USB 设备）
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 0 /f
+然后重启电脑。
+
+
+
+## 恢复（还原保护）
+用完 USB 后，执行：
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 1 /f
+然后再重启一次。
+注意：如果公司域控会定期 `gpupdate`，恢复这步可能都不需要手动做——策略同步时会自动还原为 1。
+
+
+
+# 不行
+# 1. 重新扫描设备
+pnputil /scan-devices
+
+# 2. 如果还不行，禁用再启用 MTP 设备
+Get-PnpDevice -FriendlyName "MTP USB Device" | Disable-PnpDevice -Confirm:$false
+Start-Sleep 3
+Get-PnpDevice -FriendlyName "MTP USB Device" | Enable-PnpDevice -Confirm:$false
+
+
+如果仍不行，在管理员 PowerShell 中：
+# 3. 重装 MTP 驱动
+pnputil /remove-device "USB\VID_XXXX&PID_XXXX&MI_00\<instance>"
+pnputil /scan-devices
+

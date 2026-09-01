@@ -1,0 +1,25 @@
+# 日志 / 临时
+*.log
+adbdrag_*/
+*.tmp
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local credentials / config
+.env
+.env.*
+
+# Built binaries (build with build-exe.ps1)
+*.exe
+
+# Local full notes / version history (not on GitHub)
+README.local.md
+
+# local Chinese notes / version history — not on GitHub
+README.LOCAL.md
+版本记录.md

@@ -1,0 +1,11 @@
+# 电脑 → 手机
+adb push "C:\Users\<用户名>\Desktop\文件名" /sdcard/Download/
+
+# 手机 → 电脑
+adb pull /sdcard/Download/文件名 "C:\Users\<用户名>\Desktop\"
+
+# 拉取所有照片
+adb pull /sdcard/DCIM/Camera/ "C:\Users\<用户名>\Desktop\photos\"
+
+# 列出手机文件
+adb shell ls /sdcard/Download/
